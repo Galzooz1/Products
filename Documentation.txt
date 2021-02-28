@@ -1,0 +1,93 @@
+USERS-
+
+--------
+list:
+url/users - > router.get - list of all users:no password include
+
+--------
+sign up:
+url/users -> router.post - sign up
+{
+user: min 2 chars, max 30 chars
+email: min 2 chars, max 50 chars
+password: min 2 chars, max 100 chars
+role:admin/reguler -> default = regular
+date_created: -> default = Date.now
+}
+signup created = status 201
+signup failed = status 400
+
+--------
+login:
+url/users/login -> router.post - Login
+{
+email: valid email
+else -> "Email Incorrect!"
+password: valid password
+else -> "Password incorrect!"
+}
+login succeed= status 200
+login failed = status 400
+after login the user getting Token for 60 minutes!
+
+--------
+user info:
+url/users/userInfo -> router.get - self user info by id -> only with token!
+get all user data except password:
+username, email, role, date_created
+get succeed = status 200
+get failed = status 400
+
+--------
+
+PRODUCTS-
+
+--------
+
+Main list:
+url/products -> router.get - list of 10 products in shop
+url/products?page=0 -> list of 10 first products
+url/products?page=1 -> list of 10 (or the rest) of the products
+url/products?sort=name -> sorting the list by the name, can be replaced to any other parameters such as price, date etc.
+url/products?=sort=name&reverse=yes -> showing the list from the last to the first by the value of the sort.
+---------
+
+Search:
+url/products/search?s=name -> router get - showing one or more by the name or information of the product you insert.
+page,reverse and sort works here also.
+---------
+
+Prices:
+url/products/prices?min=<Number>&max=<Number> -> router.get - list of 10 products from the minimum price to the maximum price the user entered
+url/products/prices?min=<Number>&max=<Number>&sort=price -> sorted from the first to the last by price
+url/products/prices?min=<Number>&max=<Number>&sort=price&reverse=yes -> sorted from the last to the first by price
+page,reverse and sort works here also.
+---------
+
+Category:
+url/category/<Category Name> -> router.get - list of 10 products showing by the category name
+page,reverse and sort works here also.
+
+---------
+
+ADD Product:
+url/ -> router.post - user can Add product when logged in with Token ONLY!
+correct table for adding new product-
+name: min 2 chars, max 50 chars, required
+info: min 2 chars, max 200 chars, required
+category: min 2 chars, max 50 chars, required
+img: min 2 chars, max 200 chars, required
+price: min 0 char, max 100 chars, required
+
+date created automatically will be added or admin can add it himself.
+---------
+
+DELETE Product:
+url/<Product ID> -> router.delete - user can delete his own products when logged in with Token ONLY!
+delete by product ID only.
+---------
+
+EDIT Product:
+url/<Product ID> -> router.put - user can edit his own products when loggen in with Token ONLY!
+Update/Edit by product ID only.
+---------
